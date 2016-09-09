@@ -386,7 +386,7 @@ struct run_info {
 
  @param[in] filename Name of the SDF file to open
  @param[in] comm     MPI communicator to use
- @param[in] mode     File mode
+ @param[in] mode     File mode (SDF_READ or SDF_WRITE)
  @param[in] use_mmap Flag which specifies wether mmap should be used
 
  @return SDF filehandle on success, NULL on error
@@ -395,6 +395,10 @@ struct run_info {
  @code
     sdf_file_t *h = sdf_open("myfile.sdf", MPI_COMM_WORLD, SDF_READ, 0);
  @endcode
+
+ @note 
+ If the file is opened with mode SDF_READ, sdf_read_header() is automatically 
+ called to verify the SDF magic number and populate the header data.
  */
 sdf_file_t *sdf_open(const char *filename, comm_t comm, int mode, int use_mmap);
 
@@ -466,6 +470,8 @@ sdf_block_t *sdf_find_block_by_name(sdf_file_t *h, const char *name);
  @param[in] h        SDF file handle
 
  @return 0 on success, 1 on error
+
+ @note This function will be called automatically if sdf_open() is called with mode SDF_READ.
  */
 int sdf_read_header(sdf_file_t *h);
 
