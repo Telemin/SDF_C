@@ -10,7 +10,7 @@ endif()
 set(TOPLEVEL "${CMAKE_CURRENT_SOURCE_DIR}")
 #file(GLOB SOURCE_ALL include/*inc CMakeLists.txt Makefile*)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fpic")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fpic -g")
 if(${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -gdwarf-2")
 endif()
@@ -22,3 +22,5 @@ set(SDFC_LIB_DIR "${CMAKE_CURRENT_BINARY_DIR}/src" CACHE PATH
 
 include_directories(include)
 add_subdirectory(src)
+install(DIRECTORY include DESTINATION . COMPONENT develop PATTERN uthash.h EXCLUDE)
+install(FILES src/uthash/include/uthash.h DESTINATION include COMPONENT develop)
