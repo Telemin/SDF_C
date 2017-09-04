@@ -17,6 +17,10 @@ int sdf_helper_read_data(sdf_file_t *h, sdf_block_t *b)
     int i;
     sdf_block_t *block;
 
+    if (!h->stack_handle){
+      sdf_stack_init(h);
+    }
+
     for (i = 0; i < b->n_ids; i++) {
         // Fill in derived components which are not already cached
         if (b->must_read[i]) {
